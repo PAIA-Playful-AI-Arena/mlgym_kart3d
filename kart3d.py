@@ -100,18 +100,20 @@ def kart_env(file_name: str=None, render_mode: str=None):
     
     return env
 
+
 class Game(PAIAGame):
     def __init__(self, *args, **kwargs):
-        self.name = 'kart3d'
+        self.name = 'kart3d' # for unity_path
 
-    def env(self):
-        env = kart_env(self.unity_path(), render_mode='video')
-        return PAIAWrapper(env, self.result_handler)
+    def make_env(self):
+        env = kart_env(file_name=self.unity_path(), render_mode='video')
+        return PAIAWrapper(env, on_step=self.on_step)
     
     def unity_path(self):
         return super().unity_path(os.path.dirname(__file__))
     
-    def result_handler(self, env, game_data: GameData):
+    def on_step(self, env, game_data: GameData):
+        # return the game result
         if game_data.observation is not None:
             return {
                 'progress': float(game_data.observation['Progress']),
