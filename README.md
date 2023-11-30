@@ -1,5 +1,6 @@
-PAIAGym Kart3D
-===
+# PAIAGym Kart3D
+
+A 3D Kart Game on the PAIA Platform.
 
 ## Installation
 
