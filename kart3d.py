@@ -3,7 +3,7 @@ import numpy as np
 import gymnasium as gym
 from gymnasium import spaces
 import gymize
-from paiagym import PAIAGame
+from paiagym import PAIAGame, PAIAWrapper, GameData
 
 def kart_env(file_name: str=None, render_mode: str=None):
     observation_space = spaces.Dict(
@@ -101,11 +101,21 @@ def kart_env(file_name: str=None, render_mode: str=None):
     return env
 
 class Game(PAIAGame):
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         self.name = 'kart3d'
 
-    def env(self, *args, **kwargs):
-        return kart_env(*args, **kwargs)
+    def env(self):
+        env = kart_env(self.unity_path(), render_mode='video')
+        return PAIAWrapper(env, self.result_handler)
     
     def unity_path(self):
         return super().unity_path(os.path.dirname(__file__))
+    
+    def result_handler(self, env, game_data: GameData):
+        if game_data.observation is not None:
+            return {
+                'progress': float(game_data.observation['Progress']),
+                'used_time': float(game_data.observation['UsedTime'])
+            }
+        else:
+            return None
