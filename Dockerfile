@@ -1,4 +1,4 @@
-FROM paiaimagestages.azurecr.io/paiagym:0.0.1-base
+FROM paiaimagestages.azurecr.io/paiagym:0.0.2-base
 
 VOLUME ["/tmp/.X11-unix"]
 
