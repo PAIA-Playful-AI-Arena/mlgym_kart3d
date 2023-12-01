@@ -12,6 +12,16 @@ paiagym install kart3d
 
 You can checkout the Dockerfile for the Docker container.
 
+To build the Docker image:
+```
+docker build -t paiagym:kart3d . --no-cache
+```
+
+To push the Docker image:
+```
+docker build -t paiagym:kart3d . --no-cache
+```
+
 If you are using Linux server, run before starting the container (install and config X server with NVIDIA Driver):
 ```
 sudo sh display.sh
